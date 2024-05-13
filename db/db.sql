@@ -5,7 +5,7 @@ nombre VARCHAR(50),
 activo BOOLEAN DEFAULT TRUE
 )
 
-CREATE TABLE Usuario (
+CREATE TABLE Usuarios (
 id SERIAL PRIMARY KEY,
 nombre_usuario VARCHAR(100),
 nombre VARCHAR(30),
@@ -14,8 +14,6 @@ correo VARCHAR(50),
 contrasenia VARCHAR(40),
 fechaNacimiento DATE,
 fotoPerfil bytea,
-mime_type VARCHAR(500),
-nombre_archivo VARCHAR(500),
 idPerfil int REFERENCES Perfil (id)
 )
 

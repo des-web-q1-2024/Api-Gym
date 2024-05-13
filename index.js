@@ -1,6 +1,7 @@
 import express from 'express';
-import { Evento } from './Routers/ApiEvento.js';
+import { Evento } from './Routers/ApiEvento.js'; 
 import { Perfiles } from './Routers/ApiPerfiles.js';
+import { Usuarios } from './Routers/ApiUsuarios.js';
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -24,7 +25,8 @@ app.use('*',(req, res, next) => {
 
 // Rutas
 app.use('/api/evento', Evento)		// Eventos
-app.use('/api/Perfiles', Perfiles) // Perfiles de Usuarios
+app.use('/api/Perfiles', Perfiles) 	// Perfiles de Usuarios
+app.use('/api/Usuarios',Usuarios)	// Registrar Usuarios
 
 // Manejo de rutas no encontradas
 app.use((req, res, next) => {
