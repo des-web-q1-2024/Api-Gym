@@ -1,4 +1,4 @@
--- Active: 1715555850749@@127.0.0.1@5432@db_dojo@public
+-- Active: 1710965540457@@localhost@5432@db_dojo@public
 CREATE TABLE Perfil (
 id SERIAL PRIMARY KEY,
 nombre VARCHAR(50),
