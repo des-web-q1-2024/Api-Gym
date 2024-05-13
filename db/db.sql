@@ -1,4 +1,4 @@
--- Active: 1710965540457@@localhost@5432@db_dojo@public
+-- Active: 1705367913692@@127.0.0.1@5432@escuela_artesmarcialeskahuna
 CREATE TABLE Perfil (
 id SERIAL PRIMARY KEY,
 nombre VARCHAR(50),
@@ -48,6 +48,10 @@ nombre_archivo VARCHAR(500),
 mime_type VARCHAR(500),
 fecha DATE
 )
+
+ALTER TABLE Evento
+ADD COLUMN descripcion VARCHAR(200)
+
 
 CREATE TABLE Participacion(
 id SERIAL PRIMARY KEY,

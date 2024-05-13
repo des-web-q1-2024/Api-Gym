@@ -1,7 +1,7 @@
 import pg from 'pg-promise';
 import dotenv from 'dotenv';
 
-dotenv.config();
+dotenv.config(); 
 
 const user=process.env.USER
 const pass=process.env.PASS
