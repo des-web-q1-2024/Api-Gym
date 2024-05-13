@@ -15,7 +15,7 @@ const getPerfil = async (req, res) => {
 const postPerfil = async (req, res) => {
 
     const { nombre,activo } = req.body;
-    const params = [ombre,activo];
+    const params = [nombre,activo];
     const sql = `insert into perfil
                 (nombre,activo)
                 values
