@@ -23,8 +23,8 @@ app.use('*',(req, res, next) => {
   });
 
 // Rutas
-app.use('/api/evento', Evento)
- app.use('/api/Perfiles', Perfiles)
+app.use('/api/evento', Evento)		// Eventos
+app.use('/api/Perfiles', Perfiles) // Perfiles de Usuarios
 
 // Manejo de rutas no encontradas
 app.use((req, res, next) => {
