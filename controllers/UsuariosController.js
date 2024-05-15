@@ -5,7 +5,7 @@ const postNuevoUsuario = async (req, res) => {
 
     try{
        
-        const { nombre_usuario,nombre,apellido,correo,contrasenia,fechaNacimiento,fotoPerfil } = req.body;
+        const { nombre_usuario,nombre,apellido,correo,contrasenia,fechaNacimiento } = req.body;
      
         const {
             buffer     
