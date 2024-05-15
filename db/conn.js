@@ -1,29 +1,30 @@
 import pg from 'pg-promise';
 import dotenv from 'dotenv';
 
-dotenv.config(); 
+dotenv.config();
 
-const user=process.env.USER
-const pass=process.env.PASS
-const dataBase= process.env.DB
-const server=process.env.SERVER
-const portDb=process.env.PORT_DB
+const user = 'postgres';
+const pass = 'N1706e18ls.';
+const dataBase = 'db_dojo';
+const server = 'localhost';
+const portDb = '5432';
 
 
-const pgp=pg()
+console.log(`USER: ${user}, PASS: ${pass}, DB: ${dataBase}, SERVER: ${server}, PORT_DB: ${portDb}`);
 
-const cnstr = `postgresql://${user}:${pass}@${server}:${portDb}/${dataBase}`; 
+const pgp = pg();
+
+const cnstr = `postgresql://${user}:${pass}@${server}:${portDb}/${dataBase}`;
 
 const db = pgp(cnstr);
 
 db.connect()
-    .then( ()=>{
+    .then(() => {
         console.log("Conexion Exitosa");
-    } )
-    .catch( (err)=>{
+    })
+    .catch((err) => {
+        console.log(`Error de conexion: ${err}`);
+    });
 
-        console.log(`Error de conexion ${err}`)
-    } )
-
-export { db }
+export { db };
 

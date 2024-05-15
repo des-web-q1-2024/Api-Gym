@@ -1,4 +1,4 @@
--- Active: 1715647239841@@127.0.0.1@5432@db_dojo
+-- Active: 1705370176782@@localhost@5432@db_dojo
 CREATE TABLE Perfil (
 id SERIAL PRIMARY KEY,
 nombre VARCHAR(50),
@@ -27,7 +27,7 @@ CREATE TABLE Matricula (
 id SERIAL PRIMARY KEY,
 fechaInicio DATE,
 idArteMarcial int REFERENCES Arte_Marcial (id),
-idUsuario int REFERENCES Usuario (id)
+idUsuarios int REFERENCES Usuarios (id)
 )
 
 CREATE TABLE Cinta (
@@ -37,7 +37,7 @@ foto bytea,
 nombre_archivo VARCHAR(500),
 mime_type VARCHAR(500),
 activo BOOLEAN DEFAULT TRUE,
-idUsuario int REFERENCES Usuario (id)
+idUsuarios int REFERENCES Usuarios (id)
 )
 
 CREATE TABLE Evento (
@@ -57,7 +57,7 @@ CREATE TABLE Participacion(
 id SERIAL PRIMARY KEY,
 Logro VARCHAR(500),
 idEvento int REFERENCES Evento(id),
-idUsuario int REFERENCES Usuario(id)
+idUsuarios int REFERENCES Usuarios(id)
 )
 
 CREATE TABLE Post (
@@ -69,14 +69,14 @@ nombre_archivo VARCHAR(500),
 mime_type VARCHAR(500),
 likes INTEGER DEFAULT 0,
 idPost int REFERENCES Post(id),
-idUsuario int REFERENCES Usuario(id)
+idUsuarios int REFERENCES Usuarios(id)
 )
 
 CREATE TABLE Comentario(
 id SERIAL PRIMARY KEY,
 comentario VARCHAR(200),
 idPost int REFERENCES Post(id),
-idUsuario int REFERENCES Usuario(id),
+idUsuarios int REFERENCES Usuarios(id),
 fecha_comentario TIMESTAMP DEFAULT current_timestamp,
 activo BOOLEAN DEFAULT TRUE
 )
@@ -93,7 +93,7 @@ activo BOOLEAN DEFAULT TRUE
 CREATE TABLE EstadoLike (
 id SERIAL PRIMARY KEY,
 idPost INT REFERENCES Post(id),
-idUsuario INT REFERENCES Usuario(id),
+idUsuarios INT REFERENCES Usuario(id),
 like INTEGER DEFAULT 0
 )
 
@@ -103,3 +103,9 @@ fecha DATE,
 idMatricula int REFERENCES Matricula(id),
 idCinta int REFERENCES Cinta(id)
 )
+
+
+
+select * from usuarios
+
+
