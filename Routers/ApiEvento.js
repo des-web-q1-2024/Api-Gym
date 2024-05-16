@@ -4,7 +4,7 @@ const Evento = express();
 const storage = multer.memoryStorage();
 const upload = multer({storage : storage});
 
-import { postEvento, getEvento, dltEvento, updEvento, getEventByDate } from "../Controllers/EventosController.js";
+import { postEvento, getEvento, dltEvento, updEvento, getEventByDate } from "../controllers/EventosController.js";
 
 Evento.use(express.json());
 Evento.post('', upload.single('foto'), postEvento)

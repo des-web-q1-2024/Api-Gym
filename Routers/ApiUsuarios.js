@@ -10,4 +10,4 @@ import { postNuevoUsuario } from "../controllers/UsuariosController.js"
 
 Usuarios.post('', upload.single('imagen'), postNuevoUsuario);
 
-export { Usuarios }
+export { Usuarios } 

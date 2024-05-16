@@ -85,7 +85,7 @@ CREATE TABLE Hilo_comentario(
 id SERIAL PRIMARY KEY,
 comentario_detalle VARCHAR(200),
 idComentario int REFERENCES Comentario(id),
-idUsuario int REFERENCES Usuario(id),
+idUsuario int REFERENCES Usuarios(id),
 fecha_comentario TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 activo BOOLEAN DEFAULT TRUE
 )
@@ -93,8 +93,8 @@ activo BOOLEAN DEFAULT TRUE
 CREATE TABLE EstadoLike (
 id SERIAL PRIMARY KEY,
 idPost INT REFERENCES Post(id),
-idUsuarios INT REFERENCES Usuario(id),
-like INTEGER DEFAULT 0
+idUsuarios INT REFERENCES Usuarios(id),
+meGusta INTEGER DEFAULT 0
 )
 
 CREATE TABLE Graduacion (
