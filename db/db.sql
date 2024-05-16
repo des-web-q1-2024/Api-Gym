@@ -1,4 +1,4 @@
--- Active: 1705370176782@@localhost@5432@db_dojo
+-- Active: 1707795232143@@127.0.0.1@5432@db_dojo
 CREATE TABLE Perfil (
 id SERIAL PRIMARY KEY,
 nombre VARCHAR(50),
@@ -52,6 +52,8 @@ fecha DATE
 ALTER TABLE Evento
 ADD COLUMN descripcion VARCHAR(200)
 
+ALTER TABLE Evento ADD COLUMN activo BOOLEAN DEFAULT true
+
 
 CREATE TABLE Participacion(
 id SERIAL PRIMARY KEY,
@@ -103,7 +105,6 @@ fecha DATE,
 idMatricula int REFERENCES Matricula(id),
 idCinta int REFERENCES Cinta(id)
 )
-
 
 
 select * from usuarios
