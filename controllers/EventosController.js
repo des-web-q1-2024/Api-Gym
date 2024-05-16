@@ -1,5 +1,6 @@
 import { db } from "../db/conn.js";
 
+/*Controlador para poder agregar eventos con su respectiva foto  */
 const postEvento = async (req, res) => {
     try {
        
@@ -23,6 +24,8 @@ const postEvento = async (req, res) => {
     }
 }
 
+/*Controlador para poder obtener todos los eventos de la base de datos */
+
 const getEvento = async (req, res) => {
     try {
         const sql = `SELECT id, nombre, fecha, descripcion, encode(foto, 'base64') foto, mime_type
@@ -37,6 +40,10 @@ const getEvento = async (req, res) => {
         res.status(500).json(e.message)
     }
 }
+
+/*Controlador para poder eliminar algun evento de la lista, (cabe aclarar que solo se actualiza el estado booleano
+    en 'false' para asi mantener sus datos en la base de datos y en todo caso poder ser reutilizado
+) */
 
 const dltEvento = async (req, res) => {
     try {
@@ -54,6 +61,8 @@ const dltEvento = async (req, res) => {
        res.status(500).json(e.message) 
     }
 }
+
+/*Controlador para actualizar un evento con el ID como parametro */
 
 const updEvento = async (req,res) => {
 
@@ -78,4 +87,27 @@ const updEvento = async (req,res) => {
             
 }
 
-export {postEvento, getEvento, dltEvento, updEvento}
+/*
+Controlador para obtener informacion sobre algun evento en especifico de acuerdo a su fecha */
+
+const getEventByDate = async (req, res) => {
+
+try {
+    const params = [req.params.fecha]
+
+  const sql = `SELECT nombre, descripcion, encode(foto, 'base64') foto, mime_type
+               FROM Evento 
+               WHERE fecha = $1`
+
+  const result = await (db.query(sql, params))
+
+  res.json(result) 
+} catch (e) {
+   res.status(500).json({Error: e.message}) 
+}
+
+ 
+
+}
+
+export {postEvento, getEvento, dltEvento, updEvento, getEventByDate}
