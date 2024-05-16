@@ -29,13 +29,11 @@ const postEvento = async (req, res) => {
 const getEvento = async (req, res) => {
     try {
         const sql = `SELECT id, nombre, fecha, descripcion, encode(foto, 'base64') foto, mime_type
-                     FROM Evento WHERE activo = true`
+        FROM Evento WHERE activo = true`
 
         const result = await (db.query(sql))
         
         res.json(result)
-
-
     } catch (e) {
         res.status(500).json(e.message)
     }

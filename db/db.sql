@@ -46,13 +46,10 @@ nombre VARCHAR(200),
 foto bytea,
 nombre_archivo VARCHAR(500),
 mime_type VARCHAR(500),
-fecha DATE
+fecha DATE,
+descripcion VARCHAR(200),
+activo BOOLEAN DEFAULT true
 )
-
-ALTER TABLE Evento
-ADD COLUMN descripcion VARCHAR(200)
-
-ALTER TABLE Evento ADD COLUMN activo BOOLEAN DEFAULT true
 
 
 CREATE TABLE Participacion(
@@ -61,6 +58,9 @@ Logro VARCHAR(500),
 idEvento int REFERENCES Evento(id),
 idUsuarios int REFERENCES Usuarios(id)
 )
+
+SELECT * FROM Participacion
+
 
 CREATE TABLE Post (
 id SERIAL PRIMARY KEY,
@@ -73,6 +73,7 @@ likes INTEGER DEFAULT 0,
 idPost int REFERENCES Post(id),
 idUsuarios int REFERENCES Usuarios(id)
 )
+
 
 CREATE TABLE Comentario(
 id SERIAL PRIMARY KEY,
@@ -107,6 +108,6 @@ idCinta int REFERENCES Cinta(id)
 )
 
 
-select * from usuarios
+select * from Evento 
 
 
