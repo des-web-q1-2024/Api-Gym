@@ -108,6 +108,7 @@ idCinta int REFERENCES Cinta(id)
 )
 
 
-select * from Evento 
+SELECT * FROM Perfil;
+
 
 
