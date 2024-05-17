@@ -16,7 +16,7 @@ const GetUsuario = async (req, res) => {
         `;
    
         const result = await db.query(sql, params);
-           console.log(result)   
+ 
         if (result[0].validado >= "1") {
             res.status(200).json({ success: true, message: "Usuario validado correctamente." });
         } else {

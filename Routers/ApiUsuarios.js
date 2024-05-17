@@ -1,4 +1,4 @@
-import Express, { request } from "express";
+import Express from "express";
 import multer from "multer";
 
 const Usuarios = Express();
@@ -7,11 +7,9 @@ const upload = multer({ storage: storage });
 
 import { getUsuarios, postNuevoUsuarios, putUsuarios, deleteUsuarios } from "../controllers/UsuariosController.js"
 
-
-
-Usuarios.get('',getUsuarios);
-Usuarios.post('', upload.single('imagen'), postNuevoUsuarios);
-Usuarios.put('/:id', upload.single('imagen'), putUsuarios);
+Usuarios.get('', getUsuarios);
+Usuarios.post('', upload.single('fotoPerfil'), postNuevoUsuarios);
+Usuarios.put('/:id', upload.single('fotoPerfil'), putUsuarios);
 Usuarios.delete('/:id', deleteUsuarios);
 
-export { Usuarios } 
+export { Usuarios }

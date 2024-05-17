@@ -12,7 +12,7 @@ nombre VARCHAR(30),
 apellido VARCHAR(30),
 correo VARCHAR(50),
 contrasenia VARCHAR(40),
-fechaNacimiento DATE,
+fechanacimiento DATE,
 fotoPerfil bytea,
 idPerfil int REFERENCES Perfil (id)
 )
