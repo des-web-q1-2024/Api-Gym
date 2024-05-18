@@ -39,6 +39,22 @@ const getEvento = async (req, res) => {
     }
 }
 
+const getEventoID = async (req, res) => {
+    try {
+        const params = [req.params.id];
+        const sql = `SELECT *FROM Evento WHERE id = $1`;
+        const result = await db.query(sql, params);
+
+        if (result.length === 0) {
+            res.status(404).json({ message: 'No se encontró registro.' });
+        } else {
+            res.json(result);
+        };
+    } catch (e) {
+        res.status(500).json(e.message)
+    }
+}
+
 /*Controlador para poder eliminar algun evento de la lista, (cabe aclarar que solo se actualiza el estado booleano
     en 'false' para asi mantener sus datos en la base de datos y en todo caso poder ser reutilizado
 ) */
@@ -108,4 +124,4 @@ try {
 
 }
 
-export {postEvento, getEvento, dltEvento, updEvento, getEventByDate}
+export {postEvento, getEvento, dltEvento, updEvento, getEventByDate, getEventoID}

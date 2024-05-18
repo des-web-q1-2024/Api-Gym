@@ -1,17 +1,18 @@
 import { db } from "../db/conn.js";
 
 const getUsuarios = async (req, res) => {
-    const sql = `
-        SELECT * FROM usuarios;
-    `;
+    const sql = `SELECT * FROM usuarios;`;
+    const result = await db.query(sql);
+  
+    res.json(result);
 
-    try {
-        const result = await db.query(sql);
-        res.json(result.rows);
-    } catch (error) {
-        console.error('Error al obtener los datos de los usuarios:', error);
-        res.status(500).json({ message: 'Error al obtener los datos de los usuarios' });
-    }
+    // try {
+    //     const result = await db.query(sql);
+    //     res.json(result.rows);
+    // } catch (error) {
+    //     console.error('Error al obtener los datos de los usuarios:', error);
+    //     res.status(500).json({ message: 'Error al obtener los datos de los usuarios' });
+    // }
 }
 
 const postNuevoUsuarios = async (req, res) => {

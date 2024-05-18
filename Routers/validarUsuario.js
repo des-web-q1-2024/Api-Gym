@@ -5,5 +5,5 @@ const validarUsuario = express.Router();
 
 validarUsuario.get('/:Usuario/:Contrasena', GetUsuario);
 
-export { validarUsuario };
+export { validarUsuario }; 
 

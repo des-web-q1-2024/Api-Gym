@@ -2,13 +2,14 @@ import { db } from "../db/conn.js";
 
 const postParticipacion = async (req, res) => {
   try {
-    const { idusuario, idevento } = req.body;
-    const query = 'INSERT INTO participacion (idusuario, idevento) VALUES ($1, $2)';
-    await db.query(query, [idusuario, idevento]);
-    res.sendStatus(201);
+    const { idusuarios, idevento, logro } = req.body;
+    const params = [idusuarios, idevento, logro];
+    const sql = `insert into participacion ( idusuarios, idevento, logro ) values ( $1, $2, $3 ) returning * `;
+    const result = await db.query(sql , params);
+
+    res.json(result);
   } catch (error) {
-    console.error(error);
-    res.sendStatus(500);
+    res.status(500).json({ error });
   }
 };
 
@@ -24,20 +25,20 @@ const getEventos = async (req, res) => {
 };
 
 //Eduardo esta seria para realizar la seleccion del evento
-const getEvento = async (req, res) => {
-    try {
-      const idevento = req.params.id;
-      const query = 'SELECT * FROM evento WHERE id = $1';
-      const { rows } = await db.query(query, [idevento]);
-      if (rows.length > 0) {
-        res.json(rows[0]);
-      } else {
-        res.sendStatus(404);
-      }
-    } catch (error) {
-      console.error(error);
-      res.sendStatus(500);
+const getEventoID = async (req, res) => {
+   try {
+        const params = [req.params.id];
+        const sql = `SELECT *FROM Evento WHERE id = $1`;
+        const result = await db.query(sql, params);
+
+        if (result.length === 0) {
+            res.status(404).json({ message: 'No se encontró registro.' });
+        } else {
+            res.json(result);
+        };
+    } catch (e) {
+        res.status(500).json(e.message)
     }
   };
 
-export { getEvento, getEventos, postParticipacion };
+export { getEventoID, getEventos, postParticipacion };
