@@ -109,7 +109,7 @@ const getEventByDate = async (req, res) => {
 try {
     const params = [req.params.fecha]
 
-  const sql = `SELECT nombre, descripcion, encode(foto, 'base64') foto, mime_type
+  const sql = `SELECT nombre, descripcion, fecha, encode(foto, 'base64') foto, mime_type
                FROM Evento 
                WHERE fecha = $1`
 
