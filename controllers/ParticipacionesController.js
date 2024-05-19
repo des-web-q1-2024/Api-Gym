@@ -1,5 +1,18 @@
 import { db } from "../db/conn.js";
 
+const getParticipacion = async (req, res) => {
+ try {
+      const sql = `SELECT a.id, a.idevento, b.nombre "evento", b.fecha, b.descripcion, a.idusuarios, c.nombre_usuario, c.nombre, c.apellido, c.correo, c.fechaNacimiento, c.idPerfil, d.nombre "perfil" FROM Participacion a INNER JOIN evento b ON a.idevento = b.id INNER JOIN usuarios c ON a.idusuarios = c.id INNER JOIN perfil d ON c.idPerfil = d.id`;
+      const result = await db.query(sql);
+      if (result.length > 0) {
+        res.json(result);
+      } else {
+        res.status(404).json(result);
+      }
+    } catch (error) {
+      res.status(500).json({ error });
+    }
+};
 const postParticipacion = async (req, res) => {
   try {
     const { idusuarios, idevento, logro } = req.body;
@@ -26,7 +39,7 @@ const getEventos = async (req, res) => {
 
 //Eduardo esta seria para realizar la seleccion del evento
 const getEventoID = async (req, res) => {
-   try {
+  try {
         const params = [req.params.id];
         const sql = `SELECT *FROM Evento WHERE id = $1`;
         const result = await db.query(sql, params);
@@ -41,4 +54,4 @@ const getEventoID = async (req, res) => {
     }
   };
 
-export { getEventoID, getEventos, postParticipacion };
+export { getParticipacion, getEventoID, getEventos, postParticipacion };

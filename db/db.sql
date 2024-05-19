@@ -153,3 +153,9 @@ VALUES (
 SELECT * FROM usuarios;
 
 select * from participacion;
+
+SELECT a.nombre_usuario, a.nombre || ' ' || a.apellido "nombre", a.correo, a.idPerfil, b.nombre "perfil"
+FROM usuarios a
+    inner join perfil b on a.idPerfil = b.id
+where
+    a.nombre_usuario = 'EFFS777';

@@ -5,14 +5,14 @@ const getUsuarios = async (req, res) => {
     const result = await db.query(sql);
   
     res.json(result);
+}
 
-    // try {
-    //     const result = await db.query(sql);
-    //     res.json(result.rows);
-    // } catch (error) {
-    //     console.error('Error al obtener los datos de los usuarios:', error);
-    //     res.status(500).json({ message: 'Error al obtener los datos de los usuarios' });
-    // }
+const getUsuariosByNombreUsuario = async (req, res) => {
+  const params = [req.params.nombre_usuario];
+  const sql = `SELECT a.nombre_usuario, a.nombre || ' ' || a.apellido "nombre", a.correo, a.idPerfil, b.nombre "perfil" FROM usuarios a inner join perfil b on a.idPerfil = b.id where a.nombre_usuario = $1;`;
+  const result = await db.query(sql, params);
+
+  res.json(result);
 }
 
 const postNuevoUsuarios = async (req, res) => {
@@ -85,6 +85,6 @@ const deleteUsuarios = async (req, res) => {
     }
 }
 
-export { getUsuarios, postNuevoUsuarios, putUsuarios, deleteUsuarios };
+export { getUsuarios, getUsuariosByNombreUsuario, postNuevoUsuarios, putUsuarios, deleteUsuarios };
 
 
