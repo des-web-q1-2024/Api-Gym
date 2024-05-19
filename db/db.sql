@@ -1,4 +1,4 @@
--- Active: 1698106069092@@localhost@5432@db_dojo
+-- Active: 1707795232143@@127.0.0.1@5432@db_dojo
 CREATE TABLE Perfil (
     id SERIAL PRIMARY KEY,
     nombre VARCHAR(50),
@@ -159,3 +159,19 @@ FROM usuarios a
     inner join perfil b on a.idPerfil = b.id
 where
     a.nombre_usuario = 'EFFS777';
+
+
+
+SELECT * FROM Evento
+
+
+SELECT
+    nombre,
+    descripcion,
+    fecha,
+    encode(foto, 'base64') foto,
+    mime_type
+FROM Evento
+WHERE
+    fecha = '2024-06-01'
+    AND activo = true
