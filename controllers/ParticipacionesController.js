@@ -15,22 +15,21 @@ const getParticipacion = async (req, res) => {
 };
 
 const getParticipacionByEventoAlumno = async (req, res) => {
-try {
-  const { idevento, idusuarios } = req.params;
-  const params = [idevento, idusuarios];
-
-  const sql = `select a.id, a.idevento, a.idusuarios, a.logro from participacion a where a.idevento = $1 and a.idusuarios = $2;`;
-  const result = await db.query(sql, params);
-  if (result.length > 0) {
-    res.json(result);
-  } else {
-    res.status(404).json(result);
+  try {
+    const { idevento, idusuarios } = req.params;
+    const params = [idevento, idusuarios];
+  
+    const sql = 'select a.id, a.idevento, a.idusuarios, a.logro from participacion a where a.idevento = $1 and a.idusuarios = $2';
+    const result = await db.query(sql, params);
+    if (result.length > 0) {
+      res.json(result);
+    } else {
+      res.status(404).json(result);
+    }
+  } catch (error) {
+    res.status(500).json({ error });
   }
-} catch (error) {
-  res.status(500).json({ error });
-}
-};
-
+  };
 const postParticipacion = async (req, res) => {
   try {
     const { idusuarios, idevento, logro } = req.body;
@@ -85,4 +84,21 @@ const getParticipacionAlumnosPorEvento = async (req, res) => {
   }
 };
 
-export { getParticipacion, getEventos, postParticipacion, putParticipacion, getParticipacionByEventoAlumno, getParticipacionAlumnosPorEvento };
+// adicional para ver si el usuario ya esta registrado en el evento Elvis Alas
+const getParticipacionByEventoAlumnoExistis = async (req, res) => {
+  try {
+    const { idevento, idusuarios } = req.params;
+    const params = [idevento, idusuarios];
+    console.log(1)
+    const sql = `SELECT COUNT(1) AS existe FROM participacion WHERE idevento = $1 AND idusuarios = $2 AND activo = true`;
+    const result = await db.query(sql, params);
+
+
+    res.json(result);
+  } catch (error) {
+    res.status(500).json({ error });
+  }
+};
+
+
+export { getParticipacion, getEventos, postParticipacion, putParticipacion, getParticipacionByEventoAlumno, getParticipacionAlumnosPorEvento, getParticipacionByEventoAlumnoExistis };
