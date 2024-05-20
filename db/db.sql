@@ -154,6 +154,29 @@ SELECT * FROM usuarios;
 
 select * from participacion;
 
+select a.id, a.idevento, a.idusuarios, a.logro
+from participacion a
+where
+    idevento = 1;
+
+Select
+    a.id,
+    a.idusuarios,
+    a.logro,
+    b.nombre_usuario,
+    b.nombre || ' ' || b.apellido "nombre",
+    b.correo,
+    b.idPerfil,
+    c.nombre "perfil"
+from
+    participacion a
+    inner join usuarios b on a.idusuarios = b.id
+    inner join perfil c on b.idPerfil = c.id
+where
+    a.idevento = 1;
+
+delete from participacion;
+
 SELECT a.nombre_usuario, a.nombre || ' ' || a.apellido "nombre", a.correo, a.idPerfil, b.nombre "perfil"
 FROM usuarios a
     inner join perfil b on a.idPerfil = b.id
