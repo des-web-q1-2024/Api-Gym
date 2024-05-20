@@ -12,6 +12,6 @@ Evento.get('/', getEvento)
 Evento.get('/:id', getEventoID)
 Evento.delete('/:id', dltEvento)
 Evento.put('/:id', updEvento)
-Evento.get('/:fecha', getEventByDate)
+Evento.get('/filtrar/:fecha', getEventByDate)
 
 export {Evento}

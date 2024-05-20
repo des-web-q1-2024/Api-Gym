@@ -105,17 +105,15 @@ const updEvento = async (req,res) => {
 Controlador para obtener informacion sobre algun evento en especifico de acuerdo a su fecha */
 
 const getEventByDate = async (req, res) => {
-
 try {
     const params = [req.params.fecha]
-
-  const sql = `SELECT nombre, descripcion, fecha, encode(foto, 'base64') foto, mime_type
+    const sql = `SELECT nombre, descripcion, fecha, encode(foto, 'base64') foto, mime_type
                FROM Evento 
-               WHERE fecha = $1`
+               WHERE fecha = $1 AND activo = true`
 
-  const result = await (db.query(sql, params))
+    const result = await (db.query(sql, params))
 
-  res.json(result) 
+    res.json(result) 
 } catch (e) {
    res.status(500).json({Error: e.message}) 
 }
