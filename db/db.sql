@@ -1,4 +1,4 @@
--- Active: 1715647239841@@127.0.0.1@5432@db_dojo
+-- Active: 1698945600332@@127.0.0.1@5432@examen_web_2
 CREATE TABLE Perfil (
 id SERIAL PRIMARY KEY,
 nombre VARCHAR(50),
@@ -126,7 +126,8 @@ idCinta int REFERENCES Cinta(id)
 )
 
 
-SELECT * FROM Perfil;
+SELECT * FROM usuarios;
 
 
 
+select * from participacion
