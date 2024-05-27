@@ -1,4 +1,4 @@
--- Active: 1698945600332@@127.0.0.1@5432@examen_web_2
+-- Active: 1705370176782@@localhost@5432@db_dojo
 CREATE TABLE Perfil (
 id SERIAL PRIMARY KEY,
 nombre VARCHAR(50),
@@ -74,7 +74,8 @@ CREATE TABLE Participacion(
 id SERIAL PRIMARY KEY,
 Logro VARCHAR(500),
 idEvento int REFERENCES Evento(id),
-idUsuarios int REFERENCES Usuarios(id)
+idUsuarios int REFERENCES Usuarios(id),
+activo bool DEFAULT true
 )
 
 SELECT * FROM Participacion
@@ -128,6 +129,6 @@ idCinta int REFERENCES Cinta(id)
 
 SELECT * FROM usuarios;
 
+drop table usuarios
 
-
-select * from participacion
+select * from usuarios
