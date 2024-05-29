@@ -55,6 +55,21 @@ const getEventoID = async (req, res) => {
     }
 }
 
+const getRecentEvents = async (req, res) => {
+    try {
+        const sql = `SELECT id, nombre, fecha, descripcion, encode(foto, 'base64') foto, mime_type
+                      FROM Evento
+                      WHERE activo = true
+                      ORDER BY fecha DESC
+                      LIMIT 6`
+         const result = await db.query(sql)
+         res.json(result)
+            
+    } catch (e) {
+        res.status(500).json(e.message)
+    }
+}
+
 /*Controlador para poder eliminar algun evento de la lista, (cabe aclarar que solo se actualiza el estado booleano
     en 'false' para asi mantener sus datos en la base de datos y en todo caso poder ser reutilizado
 ) */
@@ -122,4 +137,4 @@ try {
 
 }
 
-export {postEvento, getEvento, dltEvento, updEvento, getEventByDate, getEventoID}
+export {postEvento, getEvento, dltEvento, updEvento, getEventByDate, getEventoID, getRecentEvents}
