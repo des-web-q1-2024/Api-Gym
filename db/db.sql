@@ -1,4 +1,4 @@
--- Active: 1716597436199@@dpg-cp8j1vf109ks739s3k4g-a.oregon-postgres.render.com@5432@kahuna
+-- Active: 1715647239841@@127.0.0.1@5432@db_dojo
 CREATE TABLE Perfil (
 id SERIAL PRIMARY KEY,
 nombre VARCHAR(50),
@@ -74,8 +74,9 @@ CREATE TABLE Participacion(
 id SERIAL PRIMARY KEY,
 Logro VARCHAR(500),
 idEvento int REFERENCES Evento(id),
-idUsuarios int REFERENCES Usuarios(id), 
+idUsuarios int REFERENCES Usuarios(id),
 activo bool DEFAULT true
+
 )
 
 SELECT * FROM Participacion
@@ -114,10 +115,12 @@ activo BOOLEAN DEFAULT TRUE
 
 CREATE TABLE EstadoLike (
 id SERIAL PRIMARY KEY,
-idPost INT REFERENCES Post(id),
+idPost INT REFERENCES evento(id),
 idUsuarios INT REFERENCES Usuarios(id),
-meGusta INTEGER DEFAULT 0
+meGusta INTEGER DEFAULT 1
 )
+
+DROP table EstadoLike
 
 CREATE TABLE Graduacion (
 id SERIAL PRIMARY KEY,
@@ -129,6 +132,6 @@ idCinta int REFERENCES Cinta(id)
 
 SELECT * FROM usuarios;
 
+drop table usuarios
 
-
-select * from participacion
+select * from usuarios
