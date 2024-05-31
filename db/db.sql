@@ -130,8 +130,16 @@ idCinta int REFERENCES Cinta(id)
 )
 
 
+CREATE TABLE Save_Evento (
+    id SERIAL PRIMARY KEY,
+    Date_Save TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    idPost INT REFERENCES evento(id),
+    idUsuarios INT REFERENCES Usuarios(id)
+)
+
 SELECT * FROM usuarios;
 
 drop table usuarios
 
 select * from usuarios
+
