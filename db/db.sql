@@ -1,4 +1,4 @@
--- Active: 1715647239841@@127.0.0.1@5432@db_dojo
+-- Active: 1717360238194@@dpg-cpcfta674orc739uvm60-a.ohio-postgres.render.com@5432@db_dojo@public
 CREATE TABLE Perfil (
 id SERIAL PRIMARY KEY,
 nombre VARCHAR(50),
@@ -16,6 +16,8 @@ fechanacimiento DATE,
 fotoPerfil bytea,
 idPerfil int REFERENCES Perfil (id)
 )
+
+SELECT * from  usuarios
 
 SELECT 
     CASE 
@@ -107,6 +109,9 @@ activo BOOLEAN DEFAULT TRUE
 ALTER TABLE post
 ADD COLUMN fecha_post TIMESTAMP DEFAULT current_timestamp;
 
+alter table Post
+add COLUMN idPadre int DEFAULT 0
+
 CREATE TABLE Hilo_comentario(
 id SERIAL PRIMARY KEY,
 comentario_detalle VARCHAR(200),
@@ -117,11 +122,18 @@ activo BOOLEAN DEFAULT TRUE
 )
 
 CREATE TABLE EstadoLike (
-id SERIAL PRIMARY KEY,
-idPost INT REFERENCES evento(id),
-idUsuarios INT REFERENCES Usuarios(id),
-meGusta INTEGER DEFAULT 1
-)
+        id SERIAL PRIMARY KEY,
+        idPost INT REFERENCES evento(id),
+        idEvento INT REFERENCES evento(id),
+        idUsuarios INT REFERENCES Usuarios(id),
+        meGusta INTEGER DEFAULT 1
+    )
+
+ALTER TABLE EstadoLike
+ADD COLUMN fecha_post TIMESTAMP DEFAULT current_timestamp,
+ADD COLUMN idEvento INT REFERENCES evento(id),
+drop COLUMN idPost,
+ADD idPost INT REFERENCES Post(id)
 
 DROP table EstadoLike
 
@@ -134,11 +146,14 @@ idCinta int REFERENCES Cinta(id)
 
 
 CREATE TABLE Save_Evento (
-    id SERIAL PRIMARY KEY,
-    Date_Save TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    idPost INT REFERENCES evento(id),
-    idUsuarios INT REFERENCES Usuarios(id)
-)
+        id SERIAL PRIMARY KEY,
+        Date_Save TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        idPost INT REFERENCES post(id),
+        idUsuarios INT REFERENCES Usuarios(id)
+    )
+
+alter TABLE Save_Evento
+ADD idEvento INT REFERENCES evento(id)
 
 SELECT * FROM usuarios;
 
