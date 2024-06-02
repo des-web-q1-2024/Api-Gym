@@ -1,9 +1,11 @@
--- Active: 1715647239841@@127.0.0.1@5432@db_dojo
+-- Active: 1717360238194@@dpg-cpcfta674orc739uvm60-a.ohio-postgres.render.com@5432@db_dojo@public
 CREATE TABLE Perfil (
 id SERIAL PRIMARY KEY,
 nombre VARCHAR(50),
 activo BOOLEAN DEFAULT TRUE
 )
+
+SELECT * from Perfil
 
 CREATE TABLE Usuarios (
 id SERIAL PRIMARY KEY,
@@ -76,7 +78,6 @@ Logro VARCHAR(500),
 idEvento int REFERENCES Evento(id),
 idUsuarios int REFERENCES Usuarios(id),
 activo bool DEFAULT true
-
 )
 
 SELECT * FROM Participacion
