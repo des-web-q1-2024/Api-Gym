@@ -93,7 +93,7 @@ likes INTEGER DEFAULT 0,
 idPost int REFERENCES Post(id),
 idUsuarios int REFERENCES Usuarios(id)
 )
-
+ALTER table POSt 
 
 CREATE TABLE Comentario(
 id SERIAL PRIMARY KEY,
@@ -103,6 +103,9 @@ idUsuarios int REFERENCES Usuarios(id),
 fecha_comentario TIMESTAMP DEFAULT current_timestamp,
 activo BOOLEAN DEFAULT TRUE
 )
+
+ALTER TABLE post
+ADD COLUMN fecha_post TIMESTAMP DEFAULT current_timestamp;
 
 CREATE TABLE Hilo_comentario(
 id SERIAL PRIMARY KEY,
