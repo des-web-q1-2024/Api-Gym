@@ -12,7 +12,7 @@ dotenv.config();
 //console.log(`USER: ${user}, PASS: ${pass}, DB: ${dataBase}, SERVER: ${server}, PORT_DB: ${portDb}`);
 
 
-const user = process.env.USER 
+const user = process.env.USER
 const pass = process.env.PASS
 const dataBase = process.env.DB
 const server = process.env.SERVER
@@ -21,13 +21,13 @@ const portDb = process.env.PORT_DB
 const pgp = pg();
 
 const Pass = encodeURIComponent(pass);
-const cnstr = `postgresql://${user}:${Pass}@${server}:${portDb}/${dataBase}?ssl=true`;
+const cnstr = `postgresql://${user}:${Pass}@${server}:${portDb}/${dataBase}?`;
 
 const db = pgp(cnstr);
 
 db.connect()
     .then(() => {
-        console.log("Conexion Exitosa"); 
+        console.log("Conexion Exitosa");
     })
     .catch((err) => {
         console.log(`Error de conexion: ${err}`);
