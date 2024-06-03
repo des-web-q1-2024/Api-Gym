@@ -9,7 +9,7 @@ const getUsuarios = async (req, res) => {
 
 const getUsuariosByNombreUsuario = async (req, res) => {
   const params = [req.params.nombre_usuario];
-  const sql = `SELECT a.id, a.nombre_usuario, a.nombre || ' ' || a.apellido "nombre", a.correo, a.idPerfil, b.nombre "perfil" FROM usuarios a inner join perfil b on a.idPerfil = b.id where a.nombre_usuario = $1;`;
+  const sql = `SELECT a.id, a.nombre_usuario, a.nombre || ' ' || a.apellido "nombre", a.correo, a.idPerfil, b.nombre "perfil" ,encode(fotoPerfil, 'base64') AS foto FROM usuarios a inner join perfil b on a.idPerfil = b.id where a.nombre_usuario = $1;`;
   const result = await db.query(sql, params);
 console.log(result)
   res.json(result);
