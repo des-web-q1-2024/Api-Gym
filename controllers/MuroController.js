@@ -47,8 +47,6 @@ const deleteLike = async (req, res) => {
   }
 };
 
-
-
 // like post
 
 const getLikeCountPost = async (req, res) => {
@@ -72,6 +70,7 @@ const postLikeEvento = async (req, res) => {
       RETURNING *;
     `;
     const result = await db.query(sql, params);
+    console.log(params);
     res.json(result);
   } catch (err) {
     console.error(err);
@@ -127,7 +126,6 @@ const deleteSaveEvento = async (req, res) => {
     `;
     const result = await db.query(sql, params);
     res.json(result);
-
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: "Error al eliminar evento" });
@@ -147,49 +145,151 @@ const getSaveEvento = async (req, res) => {
   res.json(result);
 };
 
-
-
 // crud de post
 const getHiloPost = async (req, res) => {
+  console.log('hijos')
   const params = [req.params.idPost];
- 
-  const sql = `select descripcion ,
-                      encode(foto, 'base64') AS foto ,
-                      encode(fotoPerfil, 'base64') AS fotousuario ,
-                      u.nombre, CASE
-                                  WHEN EXTRACT(YEAR
-                                                FROM AGE(NOW(), p.fecha_post)) > 0 THEN CONCAT('hace ', EXTRACT(YEAR
-                                                                                                                FROM AGE(NOW(), p.fecha_post)), ' año(s)')
-                                  WHEN EXTRACT(MONTH
-                                                FROM AGE(NOW(), p.fecha_post)) > 0 THEN CONCAT('hace ', EXTRACT(MONTH
-                                                                                                                FROM AGE(NOW(), p.fecha_post)), ' mes(es)')
-                                  WHEN EXTRACT(DAY
-                                                FROM AGE(NOW(), p.fecha_post)) > 0 THEN CONCAT('hace ', EXTRACT(DAY
-                                                                                                                FROM AGE(NOW(), p.fecha_post)), ' día(s)')
-                                  WHEN EXTRACT(HOUR
-                                                FROM AGE(NOW(), p.fecha_post)) > 0 THEN CONCAT('hace ', EXTRACT(HOUR
-                                                                                                                FROM AGE(NOW(), p.fecha_post)), ' hora(s)')
-                                  WHEN EXTRACT(MINUTE
-                                                FROM AGE(NOW(), p.fecha_post)) > 0 THEN CONCAT('hace ', EXTRACT(MINUTE
-                                                                                                                FROM AGE(NOW(), p.fecha_post)), ' minuto(s)')
-                                  ELSE 'Recién publicado'
-                              END AS tiempo_transcurrido
-                    FROM post p
-                    INNER JOIN usuarios u ON p.idusuarios = u.id
-                    where idpadre=
-                      (select id
-                        FROM post p
-                        where idpadre=0
-                            and id=$1)
+
+  const sql = `WITH RECURSIVE post_tree AS (
+    SELECT 
+        p.id,
+        p.idpadre,
+        p.descripcion,
+        encode(p.foto, 'base64') AS foto,
+        encode(u.fotoPerfil, 'base64') AS fotousuario,
+        u.nombre,
+        p.fecha_post,
+        0 AS level
+    FROM post p
+    INNER JOIN usuarios u ON p.idusuarios = u.id
+    WHERE p.id = $1
+    UNION ALL
+    SELECT 
+        p.id,
+        p.idpadre,
+        p.descripcion,
+        encode(p.foto, 'base64') AS foto,
+        encode(u.fotoPerfil, 'base64') AS fotousuario,
+        u.nombre,
+        p.fecha_post,
+        pt.level + 1 AS level
+    FROM post p
+    INNER JOIN usuarios u ON p.idusuarios = u.id
+    INNER JOIN post_tree pt ON p.idpadre = pt.id
+)
+SELECT
+    id,
+    idpadre,
+    descripcion,
+    foto,
+    fotousuario,
+    nombre,
+    CASE
+        WHEN EXTRACT(YEAR FROM AGE(NOW(), fecha_post)) > 0 THEN CONCAT('hace ', EXTRACT(YEAR FROM AGE(NOW(), fecha_post)), ' año(s)')
+        WHEN EXTRACT(MONTH FROM AGE(NOW(), fecha_post)) > 0 THEN CONCAT('hace ', EXTRACT(MONTH FROM AGE(NOW(), fecha_post)), ' mes(es)')
+        WHEN EXTRACT(DAY FROM AGE(NOW(), fecha_post)) > 0 THEN CONCAT('hace ', EXTRACT(DAY FROM AGE(NOW(), fecha_post)), ' día(s)')
+        WHEN EXTRACT(HOUR FROM AGE(NOW(), fecha_post)) > 0 THEN CONCAT('hace ', EXTRACT(HOUR FROM AGE(NOW(), fecha_post)), ' hora(s)')
+        WHEN EXTRACT(MINUTE FROM AGE(NOW(), fecha_post)) > 0 THEN CONCAT('hace ', EXTRACT(MINUTE FROM AGE(NOW(), fecha_post)), ' minuto(s)')
+        ELSE 'Recién publicado'
+    END AS tiempo_transcurrido,
+    level
+FROM post_tree
+WHERE level > 0
+ORDER BY level, id;
                     `;
-               
+
   const result = await db.query(sql, params);
-console.log('hilos')
+
   res.json(result);
 };
 
+// const getPost = async (req, res) => {
+
+//   const params = [req.params.idUsuarios];
+//   const sql = `WITH RECURSIVE post_tree AS (
+//     SELECT 
+//         p.id,
+//         p.idpadre,
+//         p.descripcion,
+//         encode(p.foto, 'base64') AS foto,
+//         encode(u.fotoPerfil, 'base64') AS fotousuario,
+//         u.nombre,
+//         p.fecha_post,
+//         0 AS level,
+//         jsonb_build_object(
+//             'id', p.id,
+//             'descripcion', p.descripcion,
+//             'foto', encode(p.foto, 'base64'),
+//             'fotousuario', encode(u.fotoPerfil, 'base64'),
+//             'nombre', u.nombre,
+//             'fecha_post', p.fecha_post,
+//             'tiempo_transcurrido', CASE
+//                                         WHEN EXTRACT(YEAR FROM AGE(NOW(), p.fecha_post)) > 0 THEN CONCAT('hace ', EXTRACT(YEAR FROM AGE(NOW(), p.fecha_post)), ' año(s)')
+//                                         WHEN EXTRACT(MONTH FROM AGE(NOW(), p.fecha_post)) > 0 THEN CONCAT('hace ', EXTRACT(MONTH FROM AGE(NOW(), p.fecha_post)), ' mes(es)')
+//                                         WHEN EXTRACT(DAY FROM AGE(NOW(), p.fecha_post)) > 0 THEN CONCAT('hace ', EXTRACT(DAY FROM AGE(NOW(), p.fecha_post)), ' día(s)')
+//                                         WHEN EXTRACT(HOUR FROM AGE(NOW(), p.fecha_post)) > 0 THEN CONCAT('hace ', EXTRACT(HOUR FROM AGE(NOW(), p.fecha_post)), ' hora(s)')
+//                                         WHEN EXTRACT(MINUTE FROM AGE(NOW(), p.fecha_post)) > 0 THEN CONCAT('hace ', EXTRACT(MINUTE FROM AGE(NOW(), p.fecha_post)), ' minuto(s)')
+//                                         ELSE 'Recién publicado'
+//                                     END,
+//             'level', 0,
+//             'children', '[]'::jsonb
+//         ) AS post_object
+//     FROM post p
+//     INNER JOIN usuarios u ON p.idusuarios = u.id
+//     WHERE p.idpadre = 0 -- Filtrar por los registros con ID como padres
+//     AND p.idusuarios = $1
+//     UNION ALL
+//     SELECT 
+//         p.id,
+//         p.idpadre,
+//         p.descripcion,
+//         encode(p.foto, 'base64') AS foto,
+//         encode(u.fotoPerfil, 'base64') AS fotousuario,
+//         u.nombre,
+//         p.fecha_post,
+//         pt.level + 1 AS level,
+//         jsonb_build_object(
+//             'id', p.id,
+//             'descripcion', p.descripcion,
+//             'foto', encode(p.foto, 'base64'),
+//             'fotousuario', encode(u.fotoPerfil, 'base64'),
+//             'nombre', u.nombre,
+//             'fecha_post', p.fecha_post,
+//             'tiempo_transcurrido', CASE
+//                                         WHEN EXTRACT(YEAR FROM AGE(NOW(), p.fecha_post)) > 0 THEN CONCAT('hace ', EXTRACT(YEAR FROM AGE(NOW(), p.fecha_post)), ' año(s)')
+//                                         WHEN EXTRACT(MONTH FROM AGE(NOW(), p.fecha_post)) > 0 THEN CONCAT('hace ', EXTRACT(MONTH FROM AGE(NOW(), p.fecha_post)), ' mes(es)')
+//                                         WHEN EXTRACT(DAY FROM AGE(NOW(), p.fecha_post)) > 0 THEN CONCAT('hace ', EXTRACT(DAY FROM AGE(NOW(), p.fecha_post)), ' día(s)')
+//                                         WHEN EXTRACT(HOUR FROM AGE(NOW(), p.fecha_post)) > 0 THEN CONCAT('hace ', EXTRACT(HOUR FROM AGE(NOW(), p.fecha_post)), ' hora(s)')
+//                                         WHEN EXTRACT(MINUTE FROM AGE(NOW(), p.fecha_post)) > 0 THEN CONCAT('hace ', EXTRACT(MINUTE FROM AGE(NOW(), p.fecha_post)), ' minuto(s)')
+//                                         ELSE 'Recién publicado'
+//                                     END,
+//             'level', pt.level + 1,
+//             'children', '[]'::jsonb
+//         ) AS post_object
+//     FROM post p
+//     INNER JOIN usuarios u ON p.idusuarios = u.id
+//     INNER JOIN post_tree pt ON p.idpadre = pt.id
+// )
+// SELECT jsonb_agg(parent_with_children.post_object)
+// FROM (
+//     SELECT 
+//         parent.post_object || jsonb_build_object('children', jsonb_agg(child.post_object)) AS post_object
+//     FROM post_tree parent
+//     LEFT JOIN post_tree child ON parent.id = child.idpadre
+//     GROUP BY parent.post_object
+// ) AS parent_with_children;
+
+
+
+
+//                     `;
+//   const result = await db.query(sql, params);
+
+//   res.json(result);
+// };
 
 const getPost = async (req, res) => {
+  console.log('padres')
   const params = [req.params.idUsuarios];
   const sql = `SELECT   p.*, 
                         encode(foto, 'base64') AS foto,
@@ -214,7 +314,7 @@ const getPost = async (req, res) => {
                       INNER JOIN 
                         usuarios u ON p.idusuarios = u.id
                       WHERE 
-                        idUsuarios = $1 and idpadre=0
+                         idpadre=0
                       ORDER BY 
                         p.id DESC;
                     `;
@@ -225,8 +325,8 @@ const getPost = async (req, res) => {
 
 const postInsertPost = async (req, res) => {
   try {
+    console.log('hijos')
     const { encabezado, descripcion, idUsuarios } = req.body;
-
 
     const buffer = req.file ? req.file.buffer : null;
 
@@ -247,14 +347,13 @@ const postInsertPost = async (req, res) => {
 
 const postInsertHiloPost = async (req, res) => {
   try {
-    console.log(1)
+    console.log(1);
     const { descripcion, idUsuarios, idPadre } = req.body;
-
 
     const buffer = req.file ? req.file.buffer : null;
 
-    const params = [descripcion, idUsuarios, idPadre, buffer,];
-    console.log(params)
+    const params = [descripcion, idUsuarios, idPadre, buffer];
+    console.log(params);
     const sql = `
       INSERT INTO post (descripcion, idUsuarios,idPadre, foto) 
       VALUES ($1, $2, $3, $4)
@@ -267,7 +366,6 @@ const postInsertHiloPost = async (req, res) => {
     res.status(500).json({ error: "Error al insertar post" });
   }
 };
-
 
 export {
   postLike,
