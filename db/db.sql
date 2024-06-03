@@ -131,13 +131,19 @@ CREATE TABLE EstadoLike (
     meGusta INTEGER DEFAULT 1
 )
 
-DROP table EstadoLike
+DROP table EstadoLike;
+
+DROP table Graduacion;
 
 CREATE TABLE Graduacion (
     id SERIAL PRIMARY KEY,
     fecha DATE,
+    foto bytea,
+    nombre_archivo VARCHAR(500),
+    mime_type VARCHAR(500),
     idMatricula int REFERENCES Matricula (id),
-    idCinta int REFERENCES Cinta (id)
+    idCinta int REFERENCES Cinta (id),
+    idUsuarios INT REFERENCES Usuarios (id)
 )
 
 CREATE TABLE Save_Evento (
@@ -157,3 +163,26 @@ FROM matricula a
 WHERE
     a.idartemarcial = 1
 ORDER BY a.id;
+
+SELECT
+    a.id,
+    a.fecha,
+    a.idmatricula,
+    b.fechainicio,
+    c.nombre "arte_marcial",
+    a.idcinta,
+    d.nombre "cinta",
+    b.idusuarios "idalumno",
+    e.nombre || ' ' || e.apellido "nombrealumno",
+    a.idusuarios "idmaestro",
+    f.nombre || ' ' || f.apellido "nombremaestro"
+FROM
+    graduacion a
+    INNER JOIN matricula b ON a.idmatricula = b.id
+    INNER JOIN arte_marcial c ON b.idartemarcial = c.id
+    INNER JOIN cinta d ON a.idcinta = d.id
+    INNER JOIN usuarios e ON b.idusuarios = e.id
+    INNER JOIN usuarios f ON a.idusuarios = f.id
+WHERE
+    a.idmatricula = 1
+ORDER BY a.idmatricula, b.idusuarios, a.fecha;
