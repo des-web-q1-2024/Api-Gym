@@ -1,5 +1,5 @@
-import pg from "pg-promise";
 import dotenv from "dotenv";
+import pg from "pg-promise";
 
 dotenv.config();
 
@@ -25,3 +25,4 @@ db.connect()
   });
 
 export { db };
+
