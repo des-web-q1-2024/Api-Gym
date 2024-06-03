@@ -8,6 +8,7 @@ const upload = multer({ storage: storage });
 import {
   getMatricula,
   getMatriculaByArteMarcial,
+  getMatriculaByArteMarcialAlumno,
   postMatricula,
   putMatricula,
   deleteMatricula,
@@ -15,6 +16,7 @@ import {
 
 Matriculas.get("", getMatricula);
 Matriculas.get("/:idartemarcial", getMatriculaByArteMarcial);
+Matriculas.get("/:idartemarcial/:idusuarios", getMatriculaByArteMarcialAlumno);
 Matriculas.post("", postMatricula);
 Matriculas.put("/:id", putMatricula);
 Matriculas.delete("/:id", deleteMatricula);

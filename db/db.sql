@@ -153,7 +153,11 @@ CREATE TABLE Save_Evento (
     idUsuarios INT REFERENCES Usuarios (id)
 )
 
-SELECT * FROM arte_marcial;
+update graduacion set idusuarios = 1 WHERE id = 1;
+
+SELECT * FROM graduacion;
+
+SELECT * FROM matricula;
 
 drop table usuarios
 

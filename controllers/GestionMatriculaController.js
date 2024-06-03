@@ -16,6 +16,15 @@ const getMatriculaByArteMarcial = async (req, res) => {
   res.json(result);
 };
 
+const getMatriculaByArteMarcialAlumno = async (req, res) => {
+  const { idartemarcial, idusuarios } = req.params;
+  const params = [idartemarcial, idusuarios];
+
+  const sql = `SELECT a.id, fechainicio, b.nombre || ' ' || b.apellido "nombre", a.activo, c.nombre "arteMarcial", a.idartemarcial, a.idusuarios FROM matricula a INNER JOIN usuarios b ON a.idusuarios = b.id INNER JOIN arte_marcial c ON a.idartemarcial = c.id WHERE a.idartemarcial = $1 AND a.idusuarios = $2 ORDER BY a.id`;
+  const result = await db.query(sql, params);
+  res.json(result);
+};
+
 //Agregar Matricula
 const postMatricula = async (req, res) => {
   const { fechainicio, idartemarcial, idusuarios } = req.body;
@@ -46,6 +55,7 @@ const deleteMatricula = async (req, res) => {
 export {
   getMatricula,
   getMatriculaByArteMarcial,
+  getMatriculaByArteMarcialAlumno,
   postMatricula,
   putMatricula,
   deleteMatricula,
