@@ -5,7 +5,9 @@ import { Perfiles } from "./Routers/ApiPerfiles.js";
 import { Usuarios } from "./Routers/ApiUsuarios.js";
 import { validarUsuario } from "./Routers/validarUsuario.js";
 import { Muro } from "./Routers/ApiMuro.js";
+import { Matriculas } from "./Routers/apiGestionMatricula.js";
 import { Cintas } from "./Routers/apiGestionCintas.js";
+import { ArteMarcial } from "./Routers/apiGestionArteMarcial.js";
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -33,7 +35,9 @@ app.use("/api/Perfiles", Perfiles); // Perfiles de Usuarios
 app.use("/api/Usuarios", Usuarios); // Registrar Usuarios
 app.use("/api/validarUsuario", validarUsuario); //Validar Usuario, logueo pagina
 app.use("/api/participaciones", Participaciones); // Modulo de participaciones del alumno
-app.use("/api/Cintas", Cintas); // Registrar Cintas
+app.use("/api/matriculas", Matriculas); // Registrar Matriculas
+app.use("/api/cintas", Cintas); // Registrar Cintas
+app.use("/api/arteMarcial", ArteMarcial); // Registrar Cintas
 app.use("/api/Muro", Muro);
 
 // Manejo de rutas no encontradas

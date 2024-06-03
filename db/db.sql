@@ -58,6 +58,8 @@ CREATE TABLE Matricula (
     idUsuarios int REFERENCES Usuarios (id)
 )
 
+ALTER TABLE Matricula ADD COLUMN activo BOOLEAN DEFAULT true;
+
 CREATE TABLE Cinta (
     id SERIAL PRIMARY KEY,
     nombre VARCHAR(70),
@@ -148,8 +150,13 @@ CREATE TABLE Save_Evento (
     idUsuarios INT REFERENCES Usuarios (id)
 )
 
-SELECT * FROM usuarios;
+SELECT * FROM arte_marcial;
 
 drop table usuarios
 
-select * from cinta;
+SELECT a.id, b.nombre || ' ' || b.apellido "nombre", a.activo
+FROM matricula a
+    INNER JOIN usuarios b ON a.idusuarios = b.id
+WHERE
+    a.idartemarcial = 1
+ORDER BY a.id;
