@@ -1,4 +1,4 @@
--- Active: 1715647239841@@127.0.0.1@5432@db_dojo
+-- Active: 1717362514211@@dpg-cpcfta674orc739uvm60-a.ohio-postgres.render.com@5432@db_dojo
 CREATE TABLE Perfil (
 id SERIAL PRIMARY KEY,
 nombre VARCHAR(50),

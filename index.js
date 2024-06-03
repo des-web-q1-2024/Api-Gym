@@ -5,6 +5,8 @@ import { Perfiles } from './Routers/ApiPerfiles.js';
 import { Usuarios } from './Routers/ApiUsuarios.js';
 import { validarUsuario } from './Routers/validarUsuario.js';
 import { Muro } from './Routers/ApiMuro.js';
+import{ApiUsuariosRegistro} from './Routers/ApiUsuariosRegistro.js'
+
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -32,7 +34,10 @@ app.use('/api/Perfiles', Perfiles) 					// Perfiles de Usuarios
 app.use('/api/Usuarios',Usuarios)					// Registrar Usuarios
 app.use('/api/validarUsuario', validarUsuario);		//Validar Usuario, logueo pagina
 app.use('/api/participaciones', Participaciones);   // Modulo de participaciones del alumno
-app.use('/api/Muro',Muro)
+app.use('/api/Muro',Muro);
+app.use('/api/registro', ApiUsuariosRegistro);
+
+
 
 // Manejo de rutas no encontradas
 app.use((req, res, next) => {
