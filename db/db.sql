@@ -1,4 +1,4 @@
--- Active: 1698106069092@@localhost@5432@db_dojo
+-- Active: 1715647239841@@127.0.0.1@5432@db_dojo
 CREATE TABLE Perfil (
     id SERIAL PRIMARY KEY,
     nombre VARCHAR(50),
@@ -114,9 +114,6 @@ CREATE TABLE Comentario (
     fecha_comentario TIMESTAMP DEFAULT current_timestamp,
     activo BOOLEAN DEFAULT TRUE
 )
-
-ALTER TABLE post
-ADD COLUMN fecha_post TIMESTAMP DEFAULT current_timestamp;
 
 CREATE TABLE Hilo_comentario (
     id SERIAL PRIMARY KEY,
