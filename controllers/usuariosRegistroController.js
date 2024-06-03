@@ -20,8 +20,12 @@ const postNuevoUsuarios = async (req, res) => {
             RETURNING *, 'Inserción Exitosa' AS mensaje;
         `;
 
+        console.log('Params:', params); // Agrega este console.log para ver los parámetros que estás recibiendo
+
         const result = await db.query(sql, params);
-        res.json(result);
+        console.log('Result:', result); // Agrega este console.log para ver el resultado de la consulta
+
+        res.json(result.rows[0]); // Asegúrate de enviar la fila resultante
     } catch (err) {
         console.error('Error al insertar un nuevo usuario:', err);
         res.status(500).json({ mensaje: err.message });
@@ -29,6 +33,7 @@ const postNuevoUsuarios = async (req, res) => {
 }
 
 export { postNuevoUsuarios };
+
 
 
 
