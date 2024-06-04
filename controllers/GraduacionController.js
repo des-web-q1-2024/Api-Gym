@@ -2,7 +2,7 @@ import { db } from "../db/conn.js";
 
 //Consultar Graduacion
 const getGraduacion = async (req, res) => {
-  const sql = `SELECT a.id, a.fecha, a.idmatricula, b.fechainicio, c.nombre "arte_marcial", a.idcinta, d.nombre "cinta", b.idusuarios "idalumno", e.nombre || ' ' || e.apellido "nombrealumno", a.idusuarios "idmaestro",  f.nombre || ' ' || f.apellido "nombremaestro" FROM graduacion a    INNER JOIN matricula b ON a.idmatricula = b.id INNER JOIN arte_marcial c ON b.idartemarcial = c.id INNER JOIN cinta d ON a.idcinta = d.id INNER JOIN usuarios e ON b.idusuarios = e.id INNER JOIN usuarios f ON a.idusuarios = f.id WHERE a.idmatricula = 0 ORDER BY a.idmatricula, b.idusuarios, a.fecha;`;
+  const sql = `SELECT a.id, a.fecha, a.idmatricula, b.fechainicio, c.nombre "arte_marcial", a.idcinta, d.nombre "cinta", b.idusuarios "idalumno", e.nombre || ' ' || e.apellido "nombrealumno", a.idusuarios "idmaestro",  f.nombre || ' ' || f.apellido "nombremaestro", a.foto, a.nombre_archivo, a.mime_type FROM graduacion a INNER JOIN matricula b ON a.idmatricula = b.id INNER JOIN arte_marcial c ON b.idartemarcial = c.id INNER JOIN cinta d ON a.idcinta = d.id INNER JOIN usuarios e ON b.idusuarios = e.id INNER JOIN usuarios f ON a.idusuarios = f.id WHERE a.idmatricula = 0 ORDER BY a.idmatricula, b.idusuarios, a.fecha;`;
   const result = await db.query(sql);
   res.json(result);
 };
@@ -11,7 +11,7 @@ const getGraduacionByMatricula = async (req, res) => {
   const { idmatricula } = req.params;
   const params = [idmatricula];
 
-  const sql = `SELECT a.id, a.fecha, a.idmatricula, b.fechainicio, c.nombre "arte_marcial", a.idcinta, d.nombre "cinta", b.idusuarios "idalumno", e.nombre || ' ' || e.apellido "nombrealumno", a.idusuarios "idmaestro",  f.nombre || ' ' || f.apellido "nombremaestro" FROM graduacion a    INNER JOIN matricula b ON a.idmatricula = b.id INNER JOIN arte_marcial c ON b.idartemarcial = c.id INNER JOIN cinta d ON a.idcinta = d.id INNER JOIN usuarios e ON b.idusuarios = e.id INNER JOIN usuarios f ON a.idusuarios = f.id WHERE a.idmatricula = $1 ORDER BY a.idmatricula, b.idusuarios, a.fecha;`;
+  const sql = `SELECT a.id, a.fecha, a.idmatricula, b.fechainicio, c.nombre "arte_marcial", a.idcinta, d.nombre "cinta", b.idusuarios "idalumno", e.nombre || ' ' || e.apellido "nombrealumno", a.idusuarios "idmaestro",  f.nombre || ' ' || f.apellido "nombremaestro", a.foto, a.nombre_archivo, a.mime_type FROM graduacion a INNER JOIN matricula b ON a.idmatricula = b.id INNER JOIN arte_marcial c ON b.idartemarcial = c.id INNER JOIN cinta d ON a.idcinta = d.id INNER JOIN usuarios e ON b.idusuarios = e.id INNER JOIN usuarios f ON a.idusuarios = f.id WHERE a.idmatricula = $1 ORDER BY a.idmatricula, b.idusuarios, a.fecha;`;
   const result = await db.query(sql, params);
   res.json(result);
 };
@@ -28,8 +28,12 @@ const getGraduacionByMatriculaAlumno = async (req, res) => {
 //Agregar Graduacion
 const postGraduacion = async (req, res) => {
   const { fecha, idMatricula, idCinta, idUsuarios } = req.body;
-  const params = [fecha, idMatricula, idCinta, idUsuarios];
-  const sql = `insert into graduacion ( fecha, idMatricula, idCinta, idUsuarios ) values ($1, $2, $3, $4) returning * `;
+  const foto = req.file ? req.file.buffer : null;
+  const nombreArchivo = req.file ? req.file.originalname : null;
+  const mimeType = req.file ? req.file.mimetype : null;
+
+  const params = [fecha, idMatricula, idCinta, idUsuarios, foto];
+  const sql = `insert into graduacion ( fecha, idMatricula, idCinta, idUsuarios, foto ) values ($1, $2, $3, $4, $5) returning * `;
   const result = await db.query(sql, params);
   res.json(result);
 };

@@ -1,4 +1,4 @@
--- Active: 1717203264924@@localhost@5432@db_dojo
+-- Active: 1698106069092@@localhost@5432@db_dojo
 CREATE TABLE Perfil (
     id SERIAL PRIMARY KEY,
     nombre VARCHAR(50),
@@ -167,26 +167,3 @@ FROM matricula a
 WHERE
     a.idartemarcial = 1
 ORDER BY a.id;
-
-SELECT
-    a.id,
-    a.fecha,
-    a.idmatricula,
-    b.fechainicio,
-    c.nombre "arte_marcial",
-    a.idcinta,
-    d.nombre "cinta",
-    b.idusuarios "idalumno",
-    e.nombre || ' ' || e.apellido "nombrealumno",
-    a.idusuarios "idmaestro",
-    f.nombre || ' ' || f.apellido "nombremaestro"
-FROM
-    graduacion a
-    INNER JOIN matricula b ON a.idmatricula = b.id
-    INNER JOIN arte_marcial c ON b.idartemarcial = c.id
-    INNER JOIN cinta d ON a.idcinta = d.id
-    INNER JOIN usuarios e ON b.idusuarios = e.id
-    INNER JOIN usuarios f ON a.idusuarios = f.id
-WHERE
-    a.idmatricula = 1
-ORDER BY a.idmatricula, b.idusuarios, a.fecha;

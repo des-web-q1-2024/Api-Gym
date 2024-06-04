@@ -36,10 +36,10 @@ const postMatricula = async (req, res) => {
 
 // Actualizar datos de Matricula, requerido el ID
 const putMatricula = async (req, res) => {
-  const { fechainicio, idartemarcial, idusuarios } = req.body;
+  const { fechainicio, idartemarcial, idusuarios, activo } = req.body;
   const { id } = req.params;
-  const params = [fechainicio, idartemarcial, idusuarios, id];
-  const sql = `update matricula set fechainicio=$1, idartemarcial=$2, idusuarios = $3 where id=$4 returning * `;
+  const params = [fechainicio, idartemarcial, idusuarios, activo, id];
+  const sql = `update matricula set fechainicio=$1, idartemarcial=$2, idusuarios = $3, activo = $4 where id=$5 returning * `;
   const result = await db.query(sql, params);
   res.json(result);
 };
