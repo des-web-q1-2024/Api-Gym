@@ -1,4 +1,4 @@
--- Active: 1717633160638@@dpg-cpcfta674orc739uvm60-a.ohio-postgres.render.com@5432@db_dojo
+-- Active: 1717360238194@@dpg-cpcfta674orc739uvm60-a.ohio-postgres.render.com@5432@db_dojo
 
 /*
 
@@ -132,5 +132,24 @@ CREATE TABLE Usuarios (
     fechanacimiento DATE,
     fotoPerfil bytea,
     idPerfil int REFERENCES Perfil (id)
+)
+
+/*Creacion tablas de la landing Page
+
+FECHA: 6 DE JUNIO
+PROGRAMADOR: SAMUEL GALO
+EXPLICACION: CONECTAR A LA BASE DE DATOS A LA LANDING PARA QUE EL ADMINISTRADOS PUEDA MODIFICARLO   
+*/
+CREATE TABLE landing(
+    id SERIAL PRIMARY KEY,
+    nosotros VARCHAR(500) NOT NULL,
+    mision VARCHAR(500) NOT NULL,
+    vision VARCHAR(500) NOT NULL
+)
+
+CREATE TABLE contactosLanding(
+    id SERIAL PRIMARY KEY,
+    nombre VARCHAR(50) NOT NULL,
+    telefono VARCHAR(10) NOT NULL
 )
 

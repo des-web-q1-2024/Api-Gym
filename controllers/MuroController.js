@@ -45,7 +45,7 @@ const deleteLike = async (req, res) => {
     console.error(err);
     res.status(500).json({ error: "Error al eliminar like" });
   }
-};
+}; 
 
 // like post
 

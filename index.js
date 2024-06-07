@@ -9,6 +9,7 @@ import { Matriculas } from "./Routers/apiGestionMatricula.js";
 import { Cintas } from "./Routers/apiGestionCintas.js";
 import { ArteMarcial } from "./Routers/apiGestionArteMarcial.js";
 import { Graduacion } from "./Routers/apiGraduacion.js";
+import { Landing } from "./Routers/ApiLanding.js";
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -41,6 +42,7 @@ app.use("/api/cintas", Cintas); // Registrar Cintas
 app.use("/api/arteMarcial", ArteMarcial); // Registrar Cintas
 app.use("/api/graduaciones", Graduacion); // Registrar Cintas
 app.use("/api/Muro", Muro);
+app.use("/api/Landing", Landing) 
 
 // Manejo de rutas no encontradas
 app.use((req, res, next) => {
