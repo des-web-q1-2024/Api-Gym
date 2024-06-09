@@ -2,7 +2,7 @@ import { db } from "../db/conn.js";
 
 const getData = async (req, res) => {
     try {
-        const sql = `SELECT * FROM landing`
+        const sql = `SELECT * FROM landing WHERE id = 1`
         const result = await db.query(sql);
         if (result.length > 0) {
             res.json(result);
