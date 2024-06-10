@@ -32,7 +32,15 @@ const postGraduacion = async (req, res) => {
   const nombreArchivo = req.file ? req.file.originalname : null;
   const mimeType = req.file ? req.file.mimetype : null;
 
-  const params = [fecha, idMatricula, idCinta, idUsuarios, foto];
+  const params = [
+    fecha,
+    idMatricula,
+    idCinta,
+    idUsuarios,
+    foto,
+    nombreArchivo,
+    mimeType,
+  ];
   const sql = `insert into graduacion ( fecha, idMatricula, idCinta, idUsuarios, foto ) values ($1, $2, $3, $4, $5) returning * `;
   const result = await db.query(sql, params);
   res.json(result);
