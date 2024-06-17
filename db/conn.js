@@ -12,8 +12,8 @@ const portDb = process.env.PORT_DB;
 const pgp = pg();
 
 const Pass = encodeURIComponent(pass);
-// const cnstr = `postgresql://${user}:${Pass}@${server}:${portDb}/${dataBase}?ssl=true`;
-const cnstr = `postgresql://${user}:${Pass}@${server}/${dataBase}?ssl=true`;
+const cnstr = `postgresql://${user}:${Pass}@${server}:${portDb}/${dataBase}?ssl=true`;
+// const cnstr = `postgresql://${user}:${Pass}@${server}/${dataBase}?ssl=true`;
 
 const db = pgp(cnstr);
 
