@@ -20,7 +20,12 @@ app.use(express.json());
 // Middleware para permitir el acceso a través de CORS
 
 app.use("*", (req, res, next) => {
-  const allowedOrigins = ["http://localhost:3000", "http://localhost:5173"];
+  const allowedOrigins = [
+    "http://localhost:3000",
+    "http://localhost:5173",
+    "dpg-cpcfta674orc739uvm60-a.ohio-postgres.render.com:5432",
+    "dpg-cpcfta674orc739uvm60-a:5432",
+  ];
   const origin = req.headers.origin;
   if (allowedOrigins.includes(origin)) {
     res.setHeader("Access-Control-Allow-Origin", origin);
@@ -42,7 +47,7 @@ app.use("/api/cintas", Cintas); // Registrar Cintas
 app.use("/api/arteMarcial", ArteMarcial); // Registrar Cintas
 app.use("/api/graduaciones", Graduacion); // Registrar Cintas
 app.use("/api/Muro", Muro);
-app.use("/api/Landing", Landing) 
+app.use("/api/Landing", Landing);
 
 // Manejo de rutas no encontradas
 app.use((req, res, next) => {
