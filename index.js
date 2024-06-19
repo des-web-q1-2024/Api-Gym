@@ -23,9 +23,10 @@ app.use("*", (req, res, next) => {
   const allowedOrigins = [
     "http://localhost:3000",
     "http://localhost:5173",
+    "http://frontend-gym.onrender.com",
+    "https://frontend-gym.onrender.com",
     "dpg-cpcfta674orc739uvm60-a.ohio-postgres.render.com:5432",
     "dpg-cpcfta674orc739uvm60-a:5432",
-    "http://frontend-gym.onrender.com",
   ];
   const origin = req.headers.origin;
   if (allowedOrigins.includes(origin)) {
