@@ -25,6 +25,7 @@ app.use("*", (req, res, next) => {
     "http://localhost:5173",
     "dpg-cpcfta674orc739uvm60-a.ohio-postgres.render.com:5432",
     "dpg-cpcfta674orc739uvm60-a:5432",
+    "http://frontend-gym.onrender.com:5432",
   ];
   const origin = req.headers.origin;
   if (allowedOrigins.includes(origin)) {
