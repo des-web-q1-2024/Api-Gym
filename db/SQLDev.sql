@@ -1,4 +1,4 @@
--- Active: 1717117117301@@dpg-cpcfta674orc739uvm60-a.ohio-postgres.render.com@5432@db_dojo
+-- Active: 1717360238194@@dpg-cpcfta674orc739uvm60-a.ohio-postgres.render.com@5432@db_dojo
 
 /*
 AQUI ESTARAN TODAS LAS CONSULTAS SQL.
@@ -50,6 +50,8 @@ FROM landing a
 SELECT * FROM contactosLanding
 
 DROP TABLE contactosLanding
+
+DELETE FROM contactosLanding WHERE id = 5
 
 DROP TABLE LANDING
 --************FIN SAMUEL xd
